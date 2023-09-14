@@ -47,17 +47,29 @@ namespace ProductApi.Controllers
             var letezo_product = products.Where(x => x.Id == id).FirstOrDefault(); //id alapu keresés
 
             var product = letezo_product with //meglevo objektum adatainak frissitese
-            { 
-            product_neve = updateproductdto.product_neve,
-            ar = updateproductdto.ar,
-            modositas_ido = DateTimeOffset.UtcNow
+            {
+                product_neve = updateproductdto.product_neve,
+                ar = updateproductdto.ar,
+                modositas_ido = DateTimeOffset.UtcNow
             };
 
-            var index = products.FindIndex (x => x.Id == id); //hely kikeres, ahjol cserelni akarunk
+            var index = products.FindIndex(x => x.Id == id); //hely kikeres, ahjol cserelni akarunk
 
             products[index] = product; //csere
 
             return product;
+        }
+
+        //termek torles
+        [HttpDelete]
+        public string DeleteProductdto(Guid id)
+        {
+
+            var index = products.FindIndex(x => x.Id == id); //hely kikeres, ahjol torolni akarunk
+
+            products.RemoveAt(index);
+
+            return "Termek torolve";
         }
 
     }
