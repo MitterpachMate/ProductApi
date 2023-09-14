@@ -22,6 +22,16 @@ namespace ProductApi.Controllers
         [HttpGet()]
         public IEnumerable<productdto> GetAll() { return products; }
 
+        //
+        [HttpGet("{id}")]
+        public productdto GetById(Guid id)
+        {
+            var product = products.Where(x => x.Id == id).FirstOrDefault();
+
+            return product;
+        }
+
+
 
     }
 }
