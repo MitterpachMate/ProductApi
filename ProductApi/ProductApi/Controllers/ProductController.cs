@@ -15,5 +15,11 @@ namespace ProductApi.Controllers
         new productdto(Guid.NewGuid(), "Termék3", 3500, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow),
         new productdto(Guid.NewGuid(), "Termék4", 10000, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow),
         };
+
+        //http vegpont
+
+        //lekeres
+        [HttpGet]
+        public IEnumerable<productdto> GetAll() { return product; }
     }
 }
