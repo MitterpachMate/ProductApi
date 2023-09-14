@@ -26,7 +26,7 @@ namespace ProductApi.Controllers
         [HttpGet("{id}")]
         public productdto GetById(Guid id)
         {
-            var product = products.Where(x => x.Id == id).FirstOrDefault();
+            var product = products.Where(x => x.Id == id).FirstOrDefault(); //id alapu keresés
 
             return product;
         }
@@ -40,6 +40,25 @@ namespace ProductApi.Controllers
             return product;
         }
 
+        //termek modositas
+        [HttpPut]
+        public productdto PullProduct(Guid id, updateproductdto updateproductdto)
+        {
+            var letezo_product = products.Where(x => x.Id == id).FirstOrDefault(); //id alapu keresés
+
+            var product = letezo_product with //meglevo objektum adatainak frissitese
+            { 
+            product_neve = updateproductdto.product_neve,
+            ar = updateproductdto.ar,
+            modositas_ido = DateTimeOffset.UtcNow
+            };
+
+            var index = products.FindIndex (x => x.Id == id); //hely kikeres, ahjol cserelni akarunk
+
+            products[index] = product; //csere
+
+            return product;
+        }
 
     }
 }
