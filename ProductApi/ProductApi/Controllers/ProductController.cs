@@ -22,7 +22,7 @@ namespace ProductApi.Controllers
         [HttpGet()]
         public IEnumerable<productdto> GetAll() { return products; }
 
-        //
+        //URL id 
         [HttpGet("{id}")]
         public productdto GetById(Guid id)
         {
@@ -31,6 +31,14 @@ namespace ProductApi.Controllers
             return product;
         }
 
+        //termek hozzadas
+        [HttpGet]
+        public productdto PostProduct(createproductdto createproduct)
+        {
+            var product = new productdto(Guid.NewGuid(), createproduct.product_neve, createproduct.ar, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow); //adat beker
+            products.Add(product); //listaba hozzadas
+            return product;
+        }
 
 
     }
