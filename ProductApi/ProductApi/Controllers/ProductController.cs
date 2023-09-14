@@ -4,11 +4,11 @@ using static ProductApi.dtos;
 
 namespace ProductApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("product")]
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private static readonly List<productdto> product = new()
+        private static readonly List<productdto> products = new()
         {
         new productdto(Guid.NewGuid(), "Termék1", 2500, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow),
         new productdto(Guid.NewGuid(), "Termék2", 500, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow),
@@ -19,7 +19,9 @@ namespace ProductApi.Controllers
         //http vegpont
 
         //lekeres
-        [HttpGet]
-        public IEnumerable<productdto> GetAll() { return product; }
+        [HttpGet()]
+        public IEnumerable<productdto> GetAll() { return products; }
+
+
     }
 }
