@@ -31,7 +31,7 @@ namespace ProductApi.Controllers
             return product;
         }
 
-        //termek hozzadas
+        //termek hozzaadas
         [HttpGet]
         public productdto PostProduct(createproductdto createproduct)
         {
