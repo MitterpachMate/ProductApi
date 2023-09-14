@@ -32,7 +32,7 @@ namespace ProductApi.Controllers
         }
 
         //termek hozzaadas
-        [HttpGet]
+        [HttpPost()]
         public productdto PostProduct(createproductdto createproduct)
         {
             var product = new productdto(Guid.NewGuid(), createproduct.product_neve, createproduct.ar, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow); //adat beker
