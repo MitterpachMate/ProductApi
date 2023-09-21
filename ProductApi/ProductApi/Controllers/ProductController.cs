@@ -24,25 +24,30 @@ namespace ProductApi.Controllers
 
         //URL id 
         [HttpGet("{id}")]
-        public productdto GetById(Guid id)
+        public ActionResult<productdto> GetById(Guid id)
         {
             var product = products.Where(x => x.Id == id).FirstOrDefault(); //id alapu keresés
 
-            return product;
+            if (product == null) { return NotFound(); }
+
+            return Ok(product);
         }
 
         //termek hozzaadas
         [HttpPost()]
-        public productdto PostProduct(createproductdto createproduct)
+        public ActionResult<productdto> PostProduct(createproductdto createproduct)
         {
             var product = new productdto(Guid.NewGuid(), createproduct.product_neve, createproduct.ar, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow); //adat beker
             products.Add(product); //listaba hozzadas
-            return product;
+
+
+            //return Created("", product);
+            return CreatedAtAction(nameof(GetById),new { id = product.Id }, product);
         }
 
         //termek modositas
         [HttpPut]
-        public productdto PullProduct(Guid id, updateproductdto updateproductdto)
+        public ActionResult<productdto> PullProduct(Guid id, updateproductdto updateproductdto)
         {
             var letezo_product = products.Where(x => x.Id == id).FirstOrDefault(); //id alapu keresés
 
@@ -53,6 +58,11 @@ namespace ProductApi.Controllers
                 modositas_ido = DateTimeOffset.UtcNow
             };
 
+            if (product == null)
+            {
+                return NotFound();
+            }
+
             var index = products.FindIndex(x => x.Id == id); //hely kikeres, ahjol cserelni akarunk
 
             products[index] = product; //csere
@@ -62,14 +72,20 @@ namespace ProductApi.Controllers
 
         //termek torles
         [HttpDelete]
-        public string DeleteProductdto(Guid id)
+        public ActionResult Delete(Guid id)
         {
 
             var index = products.FindIndex(x => x.Id == id); //hely kikeres, ahjol torolni akarunk
 
+            if (index == 0)
+            {
+                return NotFound();
+            }
+
+
             products.RemoveAt(index);
 
-            return "Termek torolve";
+            return NoContent();
         }
 
     }
